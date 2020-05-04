@@ -75,7 +75,6 @@ public class IdentityDao implements IdentityDaoRemote {
 	public void delete(int id) {
 		Identity identity = entityManager.find(Identity.class, id);
 		entityManager.remove(identity);
-
 	}
 
 	@Override
