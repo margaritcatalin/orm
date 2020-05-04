@@ -5,16 +5,21 @@ import ro.unitbv.model.Organization;
 
 public class OrganizationConverter implements GenericConverter<Organization, OrganizationDTO> {
 
+	private IdentityConverter identityConverter = new IdentityConverter();
+
 	@Override
 	public Organization inversConvert(OrganizationDTO object) {
-		// TODO Auto-generated method stub
-		return null;
+		Organization organization = new Organization();
+		organization.setCui(object.getCui());
+		organization.setOrganizationName(object.getOrganizationName());
+		organization.setIdentities(identityConverter.inversConvertAll(object.getIdentities()));
+		return organization;
 	}
 
 	@Override
 	public OrganizationDTO directConvert(Organization object) {
-		// TODO Auto-generated method stub
-		return null;
+		return new OrganizationDTO(object.getOrganizationId(), object.getCui(), object.getOrganizationName(),
+				identityConverter.directConvertAll(object.getIdentities()));
 	}
 
 }
