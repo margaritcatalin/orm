@@ -14,6 +14,13 @@ public class OrganizationDTO implements Serializable {
 		super();
 	}
 
+	public OrganizationDTO(int organizationId, String cui, String organizationName) {
+		super();
+		this.organizationId = organizationId;
+		this.cui = cui;
+		this.organizationName = organizationName;
+	}
+
 	public OrganizationDTO(int organizationId, String cui, String organizationName, List<IdentityDTO> identities) {
 		super();
 		this.organizationId = organizationId;

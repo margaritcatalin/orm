@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ro.unitbv.dto.IdentityDTO;
-import ro.unitbv.model.Identity;
-
 public interface GenericConverter<A, B> {
 	A inversConvert(B object);
 

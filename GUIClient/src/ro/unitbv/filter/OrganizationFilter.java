@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import ro.unitbv.beans.LoginBean;
 
-@WebFilter("/adminFilter/*")
-public class AdminFilter implements Filter {
+@WebFilter("/organization/*")
+public class OrganizationFilter implements Filter {
 
 	public static final String LOGIN_PAGE = "/index.xhtml";
 
@@ -31,7 +31,7 @@ public class AdminFilter implements Filter {
 		if (Objects.nonNull(loginBean) && Objects.nonNull(loginBean.getIdentityDTO())) {
 			// and has the role admin
 
-			System.out.println("admin logged");
+			System.out.println("org test logged");
 			filterChain.doFilter(servletRequest, servletResponse);
 		} else {
 

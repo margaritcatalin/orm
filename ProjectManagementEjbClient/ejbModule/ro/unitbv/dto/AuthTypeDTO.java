@@ -19,6 +19,12 @@ public class AuthTypeDTO implements Serializable {
 		this.resource = resource;
 	}
 
+	public AuthTypeDTO(int authTypesId, String type) {
+		super();
+		this.authTypesId = authTypesId;
+		this.type = type;
+	}
+
 	public int getAuthTypesId() {
 		return authTypesId;
 	}
@@ -48,5 +54,4 @@ public class AuthTypeDTO implements Serializable {
 		return "AuthTypeDTO [authTypesId=" + authTypesId + ", type=" + type + ", resource=" + resource + "]";
 	}
 
-	
 }

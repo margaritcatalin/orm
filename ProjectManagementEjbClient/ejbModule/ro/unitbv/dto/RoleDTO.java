@@ -27,6 +27,14 @@ public class RoleDTO implements Serializable {
 		this.resources = resources;
 	}
 
+	public RoleDTO(int roleId, String roleDescription, String roleName, List<RightDTO> rights) {
+		super();
+		this.roleId = roleId;
+		this.roleDescription = roleDescription;
+		this.roleName = roleName;
+		this.rights = rights;
+	}
+
 	public int getRoleId() {
 		return roleId;
 	}

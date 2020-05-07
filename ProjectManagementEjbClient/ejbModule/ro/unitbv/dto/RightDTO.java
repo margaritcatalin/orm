@@ -22,6 +22,13 @@ public class RightDTO implements Serializable {
 		this.roles = roles;
 	}
 
+	public RightDTO(int rightId, String rightDescription, String rightName) {
+		super();
+		this.rightId = rightId;
+		this.rightDescription = rightDescription;
+		this.rightName = rightName;
+	}
+
 	public int getRightId() {
 		return rightId;
 	}
