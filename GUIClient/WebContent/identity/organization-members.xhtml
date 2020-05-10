@@ -88,12 +88,12 @@
 											action="#{identityBean.updateUser}" value="Update"
 											class="btn btn-light  btn-sm">
 											<f:setPropertyActionListener
-												target="#{identityBean.selectedUser}" value="#{org}" />
+												target="#{identityBean.selectedUser}" value="#{user}" />
 										</h:commandButton> <span> </span> <h:commandButton
 											action="#{identityBean.deleteUser}" value="Delete"
 											class="btn btn-light  btn-sm">
 											<f:setPropertyActionListener
-												target="#{identityBean.selectedUser}" value="#{org}" />
+												target="#{identityBean.selectedUser}" value="#{user}" />
 										</h:commandButton></td>
 								</tr>
 							</ui:repeat>

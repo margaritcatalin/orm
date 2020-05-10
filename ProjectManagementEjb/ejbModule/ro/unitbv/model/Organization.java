@@ -24,7 +24,7 @@ public class Organization implements Serializable {
 	private String organizationName;
 
 	//bi-directional many-to-one association to Identity
-	@OneToMany(mappedBy="organization")
+	@OneToMany(mappedBy="organization",cascade = CascadeType.REMOVE)
 	private List<Identity> identities;
 
 	public Organization() {

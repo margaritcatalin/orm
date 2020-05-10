@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -30,7 +31,7 @@ public class OrganizationBean {
 	@PostConstruct
 	public void init() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if(Objects.nonNull(facesContext.getExternalContext().getSessionMap().get("selectedOrganization"))){
+		if (Objects.nonNull(facesContext.getExternalContext().getSessionMap().get("selectedOrganization"))) {
 			facesContext.getExternalContext().getSessionMap().remove("selectedOrganization");
 		}
 		organizations = organizationDAORemote.findAll();
@@ -71,6 +72,9 @@ public class OrganizationBean {
 
 	public String organizationMembers() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if (Objects.nonNull(facesContext.getExternalContext().getSessionMap().get("selectedOrganization"))) {
+			facesContext.getExternalContext().getSessionMap().remove("selectedOrganization");
+		}
 		facesContext.getExternalContext().getSessionMap().put("selectedOrganization", selectedOrganization);
 		return "/identity/organization-members.xhtml?faces-redirect=true";
 	}

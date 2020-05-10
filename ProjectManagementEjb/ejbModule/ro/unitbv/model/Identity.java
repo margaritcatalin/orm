@@ -29,7 +29,7 @@ public class Identity implements Serializable {
 	private String username;
 
 	//bi-directional many-to-one association to Organization
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name="organisationId")
 	private Organization organization;
 

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -33,9 +34,11 @@ public class IdentityBean {
 	}
 
 	public String createUser() {
-		userDTO.setOrganization(currentOrganization);
-		organizationMembers.add(identityDaoRemote.create(userDTO));
-		//TODO set ROLE / RESOURCES
+		IdentityDTO user = identityDaoRemote.create(userDTO);
+		user.setOrganization(currentOrganization);
+		identityDaoRemote.update(user);
+		organizationMembers.add(user);
+		// TODO set ROLE / RESOURCES
 		initUser(userDTO);
 		return "/identity/organization-members.xhtml?faces-redirect=true";
 	}
@@ -51,15 +54,16 @@ public class IdentityBean {
 		return "/identity/organization-members.xhtml?faces-redirect=true";
 	}
 
-	public String updateOrganization() {
+	public String updateUser() {
 		return "/identity/update-identity.xhtml?faces-redirect=true";
 	}
 
-	public String doUpdateOrganization() {
+	public String doUpdateUser() {
 		identityDaoRemote.update(selectedUser);
 		for (IdentityDTO user : organizationMembers) {
 			if (selectedUser.getIdentityId() == user.getIdentityId()) {
 				user.setEmail(selectedUser.getEmail());
+				user.setUsername(selectedUser.getUsername());
 				user.setFirstname(selectedUser.getFirstname());
 				user.setLastname(selectedUser.getLastname());
 				user.setPassword(selectedUser.getPassword());
@@ -79,6 +83,7 @@ public class IdentityBean {
 		identity.setFirstname("");
 		identity.setLastname("");
 		identity.setPassword("");
+		identity.setUsername("");
 		identity.setOrganization(null);
 	}
 
@@ -113,5 +118,5 @@ public class IdentityBean {
 	public void setCurrentOrganization(OrganizationDTO currentOrganization) {
 		this.currentOrganization = currentOrganization;
 	}
-	
+
 }
