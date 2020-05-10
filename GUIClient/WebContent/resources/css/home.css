@@ -25,3 +25,18 @@
     font-weight: bold;
     padding: 0 10px 0 0;
 }
+
+
+.body-create{
+  margin-top:30px;
+}
+.container-create{
+  background-color: #fff;
+  color:#fff;
+  border: 1px solid #d5d5d5;
+}
+
+.card-create{
+  width: 300px;
+  margin: 4px auto ;
+}

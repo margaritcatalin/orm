@@ -1,5 +1,7 @@
 package ro.unitbv.util;
 
+import java.util.Objects;
+
 import ro.unitbv.dto.IdentityDTO;
 import ro.unitbv.model.Identity;
 
@@ -17,19 +19,26 @@ public class IdentityConverter implements GenericConverter<Identity, IdentityDTO
 		identity.setLastname(identityDTO.getLastname());
 		identity.setUsername(identityDTO.getUsername());
 		identity.setPassword(identityDTO.getPassword());
-		identity.setOrganization(organizationConverter.inversConvert(identityDTO.getOrganization()));
-		identity.setRoles(roleConverter.inversConvertAll(identityDTO.getRoles()));
-		identity.setResources(resourceConverter.inversConvertAll(identityDTO.getResources()));
+		if (Objects.nonNull(identityDTO.getResources())) {
+			identity.setResources(resourceConverter.inversConvertAll(identityDTO.getResources()));
+		}
+		if (Objects.nonNull(identityDTO.getOrganization())) {
+			identity.setOrganization(organizationConverter.inversConvert(identityDTO.getOrganization()));
+		}
+		if (Objects.nonNull(identityDTO.getRoles())) {
+			identity.setRoles(roleConverter.inversConvertAll(identityDTO.getRoles()));
+		}
 		return identity;
 	}
 
 	@Override
 	public IdentityDTO directConvert(Identity identity) {
-		return new IdentityDTO(identity.getIdentityId(), identity.getEmail(), identity.getFirstname(),
-				identity.getLastname(), identity.getPassword(), identity.getUsername(),
-				organizationConverter.directConvert(identity.getOrganization()),
-				resourceConverter.directConvertAll(identity.getResources()),
-				roleConverter.directConvertAll(identity.getRoles()));
+		IdentityDTO dto = new IdentityDTO(identity.getIdentityId(), identity.getEmail(), identity.getFirstname(),
+				identity.getLastname(), identity.getPassword(), identity.getUsername());
+		dto.setOrganization(organizationConverter.directConvert(identity.getOrganization()));
+		dto.setRoles(roleConverter.directConvertAll(identity.getRoles()));
+		dto.setResources(resourceConverter.directConvertAll(identity.getResources()));
+		return dto;
 	}
 
 	public RoleConverter getRoleConverter() {
