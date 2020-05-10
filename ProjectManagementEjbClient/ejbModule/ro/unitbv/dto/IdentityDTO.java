@@ -30,6 +30,20 @@ public class IdentityDTO implements Serializable {
 		this.username = username;
 	}
 
+	public IdentityDTO(int identityId, String email, String firstname, String lastname, String password,
+			String username, OrganizationDTO organization, List<ResourceDTO> resources, List<RoleDTO> roles) {
+		super();
+		this.identityId = identityId;
+		this.email = email;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.username = username;
+		this.organization = organization;
+		this.resources = resources;
+		this.roles = roles;
+	}
+
 	public int getIdentityId() {
 		return identityId;
 	}

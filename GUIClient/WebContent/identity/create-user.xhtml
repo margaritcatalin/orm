@@ -32,20 +32,26 @@
 	</div>
 	</nav>
 
-	<h:form label="updateOrganizationForm" class="form">
-		<h2>Update organization</h2>
-		<h:inputText class="effect-input" required="true"
-			label="Organization Name" placeholder="Organization Name"
-			validatorMessage="Enter Organization Name"
-			value="#{organizationBean.selectedOrganization.organizationName}"></h:inputText>
 
-		<h:inputText class="effect-input" label="CUI" required="true"
-			placeholder="Organization CUI"
-			validatorMessage="Enter Organization CUI"
-			value="#{organizationBean.selectedOrganization.cui}"></h:inputText>
-
-		<h:commandButton class="btns" value="Update"
-			action="#{organizationBean.doUpdateOrganization}"></h:commandButton>
+	<h:form label="createOrganizationForm" class="form">
+		<h2>Add a new user</h2>
+		<h:inputText class="effect-input" required="true" label="First Name"
+			placeholder="First Name" validatorMessage="Enter First Name"
+			value="#{identityBean.userDTO.firstname}"></h:inputText>
+		<h:inputText class="effect-input" required="true" label="Last Name"
+			placeholder="Last Name" validatorMessage="Enter Last Name"
+			value="#{identityBean.userDTO.lastname}"></h:inputText>
+		<h:inputText class="effect-input" required="true" label="Email"
+			placeholder="Email" validatorMessage="Enter Email"
+			value="#{identityBean.userDTO.email}"></h:inputText>
+		<h:inputText class="effect-input" required="true" label="Username"
+			placeholder="Username" validatorMessage="Enter username"
+			value="#{identityBean.userDTO.username}"></h:inputText>
+		<h:inputSecret class="password-area" label="Password" required="true"
+			placeholder="Password" validatorMessage="Enter password"
+			value="#{identityBean.userDTO.password}"></h:inputSecret>
+		<h:commandButton class="btns" value="Create"
+			action="#{identityBean.createUser}"></h:commandButton>
 		<h:messages infoStyle="color:darkgreen" errorStyle="color:darkred"></h:messages>
 	</h:form>
 </h:body>

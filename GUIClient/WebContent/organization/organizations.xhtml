@@ -27,8 +27,13 @@
 			<li class="nav-item active"><a class="nav-link" href="#">Home
 					<span class="sr-only">(current)</span>
 			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Contact US</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/GUIClient/organization/organizations.xhtml">Organizations</a>
+			</li>
+			<li style="float: right;" class="nav-item"><h:form>
+					<h:commandButton value="Logout" action="#{loginBean.logout}"
+						class="btn btn-default" />
+				</h:form></li>
 		</ul>
 	</div>
 	</nav>

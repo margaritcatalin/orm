@@ -3,6 +3,7 @@ package ro.unitbv.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -13,6 +14,7 @@ import javax.persistence.Query;
 
 import ro.unitbv.dto.IdentityDTO;
 import ro.unitbv.dto.LoginDTO;
+import ro.unitbv.dto.OrganizationDTO;
 import ro.unitbv.exception.LoginException;
 import ro.unitbv.model.Identity;
 import ro.unitbv.util.IdentityConverter;
@@ -93,6 +95,11 @@ public class IdentityDao implements IdentityDaoRemote {
 		IdentityDTO identityDTO = identityConverter.directConvert(identity);
 		return identityDTO;
 
+	}
+
+	@Override
+	public List<IdentityDTO> findAllMembers(OrganizationDTO organization) {
+		return findAll().stream().filter(identity->organization.getOrganizationId() == identity.getOrganization().getOrganizationId()).collect(Collectors.toList());
 	}
 
 }

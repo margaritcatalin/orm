@@ -16,12 +16,6 @@
 		class="navbar-brand" href="#">Resource <span
 		style="color: #28a745">Management</span> System
 	</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse"
-		data-target="#navbarSupportedContent"
-		aria-controls="navbarSupportedContent" aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active"><a class="nav-link" href="#">Home
@@ -30,8 +24,10 @@
 			<li class="nav-item"><a class="nav-link"
 				href="/GUIClient/organization/organizations.xhtml">Organizations</a>
 			</li>
-			<li class="nav-item"><a class="nav-link" href="#">Contact US</a>
-			</li>
+			<li style="float: right;" class="nav-item"><h:form>
+					<h:commandButton value="Logout" action="#{loginBean.logout}"
+						class="btn btn-default" />
+				</h:form></li>
 		</ul>
 	</div>
 	</nav>
