@@ -29,9 +29,8 @@ public class OrganizationFilter implements Filter {
 		LoginBean loginBean = (LoginBean) httpServletRequest.getSession().getAttribute("loginBean");
 
 		if (Objects.nonNull(loginBean) && Objects.nonNull(loginBean.getIdentityDTO())) {
-			// and has the role admin
+			//TODO and has the role admin
 
-			System.out.println("org test logged");
 			filterChain.doFilter(servletRequest, servletResponse);
 		} else {
 

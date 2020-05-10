@@ -27,15 +27,28 @@
 			<li class="nav-item active"><a class="nav-link" href="#">Home
 					<span class="sr-only">(current)</span>
 			</a></li>
-			<li class="nav-item"><a class="nav-link"
-				href="/GUIClient/organization/organizations.xhtml">Organizations</a>
-			</li>
+			<li class="nav-item"><a class="nav-link" href="#">About</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Contact US</a>
 			</li>
 		</ul>
 	</div>
 	</nav>
-	<h2 class="title-form-login">Admin page</h2>
 
+	<h:form label="updateOrganizationForm" class="form">
+		<h2>Update organization</h2>
+		<h:inputText class="effect-input" required="true"
+			label="Organization Name" placeholder="Organization Name"
+			validatorMessage="Enter Organization Name"
+			value="#{organizationBean.selectedOrganization.organizationName}"></h:inputText>
+
+		<h:inputText class="effect-input" label="CUI" required="true"
+			placeholder="Organization CUI"
+			validatorMessage="Enter Organization CUI"
+			value="#{organizationBean.selectedOrganization.cui}"></h:inputText>
+
+		<h:commandButton class="btns" value="Update"
+			action="#{organizationBean.doUpdateOrganization}"></h:commandButton>
+		<h:messages infoStyle="color:darkgreen" errorStyle="color:darkred"></h:messages>
+	</h:form>
 </h:body>
 </html>
