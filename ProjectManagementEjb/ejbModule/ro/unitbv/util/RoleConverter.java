@@ -1,5 +1,7 @@
 package ro.unitbv.util;
 
+import java.util.Objects;
+
 import ro.unitbv.dto.RoleDTO;
 import ro.unitbv.model.Role;
 
@@ -11,14 +13,19 @@ public class RoleConverter implements GenericConverter<Role, RoleDTO> {
 		Role role = new Role();
 		role.setRoleName(object.getRoleName());
 		role.setRoleDescription(object.getRoleDescription());
-		role.setRights(rightConverter.inversConvertAll(object.getRights()));
+		if (Objects.nonNull(object.getRights())) {
+			role.setRights(rightConverter.inversConvertAll(object.getRights()));
+		}
 		return role;
 	}
 
 	@Override
 	public RoleDTO directConvert(Role object) {
-		return new RoleDTO(object.getRoleId(), object.getRoleDescription(), object.getRoleName(),
-				rightConverter.directConvertAll(object.getRights()));
+		RoleDTO dto = new RoleDTO(object.getRoleId(), object.getRoleDescription(), object.getRoleName());
+		if (Objects.nonNull(object.getRights())) {
+			dto.setRights(rightConverter.directConvertAll(object.getRights()));
+		}
+		return dto;
 	}
 
 }

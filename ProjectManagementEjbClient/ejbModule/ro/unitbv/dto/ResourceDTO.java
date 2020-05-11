@@ -22,6 +22,12 @@ public class ResourceDTO implements Serializable {
 		this.authtypes = authtypes;
 	}
 
+	public ResourceDTO(int resourceId, String resourceName) {
+		super();
+		this.resourceId = resourceId;
+		this.resourceName = resourceName;
+	}
+
 	public ResourceDTO(int resourceId, String resourceName, List<AuthTypeDTO> authtypes, List<IdentityDTO> identities,
 			List<RoleDTO> roles) {
 		super();

@@ -32,7 +32,7 @@ public class LoginBean implements Serializable {
 			facesContext.getExternalContext().getSessionMap().put("identiyDTO", identiyDTO);
 			// if userDTO is admin
 			System.out.println("admin logged");
-			return "/adminFilter/admin.xhtml?faces-redirect=true";
+			return "/organization/organizations.xhtml?faces-redirect=true";
 
 		} catch (LoginException e) {
 			System.out.println("Invalid username or password");

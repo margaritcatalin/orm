@@ -47,10 +47,8 @@
 	</nav>
 	<div class="backgroud-body">
 		<h1 class="table-title">
-			<span style="color: #28a745"><h:outputText
-					value="#{identityBean.currentOrganization.organizationName}" /></span> Members <a
-				class="btn btn-light btn-circle btn-sm"
-				href="/GUIClient/identity/create-user.xhtml"> <svg
+			Resources <a class="btn btn-light btn-circle btn-sm"
+				href="/GUIClient/resource/create-resource.xhtml"> <svg
 					class="bi bi-person-plus-fill" width="1em" height="1em"
 					viewBox="0 0 16 16" fill="currentColor"
 					xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd"
@@ -68,10 +66,7 @@
 						<thead>
 							<tr>
 								<th class="th-style">Code</th>
-								<th class="th-style">Username</th>
-								<th class="th-style">Email</th>
-								<th class="th-style">First Name</th>
-								<th class="th-style">Last Name</th>
+								<th class="th-style">Resource Name</th>
 								<th class="th-style">Actions</th>
 							</tr>
 						</thead>
@@ -81,27 +76,22 @@
 					<table class="table-body" cellpadding="0" cellspacing="0"
 						border="0">
 						<tbody>
-							<ui:repeat value="#{identityBean.organizationMembers}" var="user">
+							<ui:repeat value="#{resourceBean.allResources}" var="res">
 								<tr>
 									<td class="td-style"><h:outputText
-											value="#{user.identityId}" /></td>
+											value="#{res.resourceId}" /></td>
 									<td class="td-style"><h:outputText
-											value="#{user.username}" /></td>
-									<td class="td-style"><h:outputText value="#{user.email}" /></td>
-									<td class="td-style"><h:outputText
-											value="#{user.firstname}" /></td>
-									<td class="td-style"><h:outputText
-											value="#{user.lastname}" /></td>
+											value="#{res.resourceName}" /></td>
 									<td class="td-style"><h:commandButton
-											action="#{identityBean.updateUser}" value="Update"
-											class="btn btn-light  btn-sm">
+											action="#{resourceBean.updateResource}"
+											value="Update" class="btn btn-light btn-sm">
 											<f:setPropertyActionListener
-												target="#{identityBean.selectedUser}" value="#{user}" />
+												target="#{resourceBean.selectedResource}" value="#{res}" />
 										</h:commandButton> <span> </span> <h:commandButton
-											action="#{identityBean.deleteUser}" value="Delete"
-											class="btn btn-light  btn-sm">
+											action="#{resourceBean.deleteResource}" value="Delete"
+											class="btn btn-light btn-sm">
 											<f:setPropertyActionListener
-												target="#{identityBean.selectedUser}" value="#{user}" />
+												target="#{resourceBean.selectedResource}" value="#{res}" />
 										</h:commandButton></td>
 								</tr>
 							</ui:repeat>

@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import ro.unitbv.beans.LoginBean;
 
-@WebFilter(urlPatterns = {"/adminFilter/*","/authtype/*","/identity/*","/organization/*","/right/*","/role/*","/resource/*"})
+@WebFilter(urlPatterns = { "/adminFilter/*", "/authtype/*", "/identity/*", "/organization/*", "/right/*", "/role/*",
+		"/resource/*" })
 public class AdminFilter implements Filter {
 
 	public static final String LOGIN_PAGE = "/index.xhtml";

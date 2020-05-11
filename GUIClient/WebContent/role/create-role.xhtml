@@ -44,47 +44,26 @@
 			<div class="col">
 				<div class="card-create bg-dark">
 					<div class="card-body text-white">
-						<h:form label="updateUserForm" class="form">
+						<h:form label="createRoleForm" class="form">
 							<div class="form-group">
-								<label for="name">First Name</label>
+								<label for="name">Role Name</label>
 								<h:inputText class="form-control" required="true"
-									label="First Name" placeholder="First Name"
-									validatorMessage="Enter First Name"
-									value="#{identityBean.selectedUser.firstname}"></h:inputText>
+									label="Role Name" placeholder="Role Name"
+									validatorMessage="Enter Role Name"
+									value="#{roleBean.roleDTO.roleName}"></h:inputText>
 							</div>
 							<div class="form-group">
-								<label for="name">Last Name</label>
+								<label for="name">Role Description</label>
 								<h:inputText class="form-control" required="true"
-									label="Last Name" placeholder="Last Name"
-									validatorMessage="Enter Last Name"
-									value="#{identityBean.selectedUser.lastname}"></h:inputText>
+									label="Role Description" placeholder="Role Description"
+									validatorMessage="Enter Role Description"
+									value="#{roleBean.roleDTO.roleDescription}"></h:inputText>
 							</div>
-							<div class="form-group">
-								<label for="name">Email</label>
-								<h:inputText class="form-control" required="true" label="Email"
-									placeholder="Email" validatorMessage="Enter Email"
-									value="#{identityBean.selectedUser.email}"></h:inputText>
-							</div>
-							<div class="form-group">
-								<label for="name">Username</label>
-								<h:inputText class="form-control" required="true"
-									label="Username" placeholder="Username"
-									validatorMessage="Enter username"
-									value="#{identityBean.selectedUser.username}"></h:inputText>
-							</div>
-							<div class="form-group">
-								<label for="name">Password</label>
-								<h:inputSecret class="form-control" label="Password"
-									required="false" placeholder="Password"
-									validatorMessage="Enter password"
-									value="#{identityBean.selectedUser.password}"></h:inputSecret>
-							</div>
-
 							<div class="row d-flex justify-content-center">
-								<h:commandButton class="btn btn-primary btn-md" value="Update"
-									action="#{identityBean.doUpdateUser}"></h:commandButton>
+								<h:commandButton class="btn btn-primary btn-md" value="Create"
+									action="#{roleBean.createRole}"></h:commandButton>
 								<a class="btn btn-danger btn-md" style="margin-left: 5px;"
-									href="/GUIClient/identity/organization-members.xhtml">Back</a>
+									href="/GUIClient/role/roles.xhtml">Back</a>
 								<h:messages infoStyle="color:darkgreen"
 									errorStyle="color:darkred"></h:messages>
 							</div>
@@ -94,6 +73,5 @@
 			</div>
 		</div>
 	</div>
-
 </h:body>
 </html>
