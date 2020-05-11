@@ -35,9 +35,18 @@ public class IdentityConverter implements GenericConverter<Identity, IdentityDTO
 	public IdentityDTO directConvert(Identity identity) {
 		IdentityDTO dto = new IdentityDTO(identity.getIdentityId(), identity.getEmail(), identity.getFirstname(),
 				identity.getLastname(), identity.getPassword(), identity.getUsername());
-		dto.setOrganization(organizationConverter.directConvert(identity.getOrganization()));
-		dto.setRoles(roleConverter.directConvertAll(identity.getRoles()));
-		dto.setResources(resourceConverter.directConvertAll(identity.getResources()));
+		if (Objects.nonNull(identity.getOrganization())) {
+
+			dto.setOrganization(organizationConverter.directConvert(identity.getOrganization()));
+		}
+		if (Objects.nonNull(identity.getRoles())) {
+
+			dto.setRoles(roleConverter.directConvertAll(identity.getRoles()));
+		}
+		if (Objects.nonNull(identity.getResources())) {
+
+			dto.setResources(resourceConverter.directConvertAll(identity.getResources()));
+		}
 		return dto;
 	}
 

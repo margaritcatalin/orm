@@ -2,6 +2,7 @@ package ro.unitbv.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ import ro.unitbv.dto.LoginDTO;
 import ro.unitbv.dto.OrganizationDTO;
 import ro.unitbv.exception.LoginException;
 import ro.unitbv.model.Identity;
+import ro.unitbv.model.Organization;
 import ro.unitbv.util.IdentityConverter;
 
 /**
@@ -32,7 +34,6 @@ public class IdentityDao implements IdentityDaoRemote {
 	private EntityManager entityManager;
 
 	public IdentityDao() {
-
 	}
 
 	private IdentityConverter identityConverter = new IdentityConverter();
@@ -59,6 +60,13 @@ public class IdentityDao implements IdentityDaoRemote {
 	@Override
 	public IdentityDTO create(IdentityDTO identityDTO) {
 		Identity user = identityConverter.inversConvert(identityDTO);
+		if (Objects.nonNull(identityDTO.getOrganization())) {
+			Organization organization = entityManager.find(Organization.class,
+					identityDTO.getOrganization().getOrganizationId());
+			if (Objects.nonNull(organization)) {
+				user.setOrganization(organization);
+			}
+		}
 		entityManager.persist(user);
 		entityManager.flush();
 		identityDTO.setIdentityId(user.getIdentityId());
@@ -69,6 +77,13 @@ public class IdentityDao implements IdentityDaoRemote {
 	public IdentityDTO update(IdentityDTO identityDTO) {
 		Identity identity = identityConverter.inversConvert(identityDTO);
 		identity.setIdentityId(identityDTO.getIdentityId());
+		if (Objects.nonNull(identityDTO.getOrganization())) {
+			Organization organization = entityManager.find(Organization.class,
+					identityDTO.getOrganization().getOrganizationId());
+			if (Objects.nonNull(organization)) {
+				identity.setOrganization(organization);
+			}
+		}
 		identity = entityManager.merge(identity);
 		return identityDTO;
 	}
@@ -99,7 +114,10 @@ public class IdentityDao implements IdentityDaoRemote {
 
 	@Override
 	public List<IdentityDTO> findAllMembers(OrganizationDTO organization) {
-		return findAll().stream().filter(identity->organization.getOrganizationId() == identity.getOrganization().getOrganizationId()).collect(Collectors.toList());
+		return findAll().stream()
+				.filter(identity -> Objects.nonNull(identity.getOrganization())
+						&& organization.getOrganizationId() == identity.getOrganization().getOrganizationId())
+				.collect(Collectors.toList());
 	}
 
 }
