@@ -18,7 +18,9 @@ public class IdentityConverter implements GenericConverter<Identity, IdentityDTO
 		identity.setFirstname(identityDTO.getFirstname());
 		identity.setLastname(identityDTO.getLastname());
 		identity.setUsername(identityDTO.getUsername());
-		identity.setPassword(identityDTO.getPassword());
+		if (Objects.nonNull(identityDTO.getPassword()) && !identityDTO.getPassword().equalsIgnoreCase("")) {
+			identity.setPassword(identityDTO.getPassword());
+		}
 		if (Objects.nonNull(identityDTO.getResources())) {
 			identity.setResources(resourceConverter.inversConvertAll(identityDTO.getResources()));
 		}

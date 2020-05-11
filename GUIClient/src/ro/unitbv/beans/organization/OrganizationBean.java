@@ -1,29 +1,26 @@
 package ro.unitbv.beans.organization;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 import ro.unitbv.dao.OrganizationDaoRemote;
-import ro.unitbv.dto.IdentityDTO;
 import ro.unitbv.dto.OrganizationDTO;
 
 @ManagedBean
 @SessionScoped
-public class OrganizationBean {
+public class OrganizationBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private OrganizationDTO organizationDTO = new OrganizationDTO();
 	private OrganizationDTO selectedOrganization = new OrganizationDTO();
 	private List<OrganizationDTO> organizations;
-	private List<IdentityDTO> members;
 
 	@EJB
 	OrganizationDaoRemote organizationDAORemote;
@@ -44,12 +41,8 @@ public class OrganizationBean {
 	}
 
 	public String deleteOrganization() {
+		organizations.remove(selectedOrganization);
 		organizationDAORemote.delete(selectedOrganization.getOrganizationId());
-		for (OrganizationDTO org : organizations) {
-			if (selectedOrganization.getOrganizationId() == org.getOrganizationId()) {
-				organizations.remove(org);
-			}
-		}
 		initOrganization(selectedOrganization);
 		return "/organization/organizations.xhtml?faces-redirect=true";
 	}

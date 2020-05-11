@@ -1,5 +1,7 @@
 package ro.unitbv.beans;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -13,8 +15,9 @@ import ro.unitbv.exception.LoginException;
 
 @ManagedBean
 @SessionScoped
-public class LoginBean {
+public class LoginBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	LoginDTO loginDTO = new LoginDTO();
 
 	@EJB

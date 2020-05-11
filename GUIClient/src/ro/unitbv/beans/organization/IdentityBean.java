@@ -1,5 +1,6 @@
 package ro.unitbv.beans.organization;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +16,9 @@ import ro.unitbv.dto.OrganizationDTO;
 
 @ManagedBean
 @SessionScoped
-public class IdentityBean {
+public class IdentityBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private IdentityDTO userDTO = new IdentityDTO();
 	private IdentityDTO selectedUser = new IdentityDTO();
@@ -44,18 +47,14 @@ public class IdentityBean {
 	}
 
 	public String deleteUser() {
+		organizationMembers.remove(selectedUser);
 		identityDaoRemote.delete(selectedUser.getIdentityId());
-		for (IdentityDTO user : organizationMembers) {
-			if (selectedUser.getIdentityId() == user.getIdentityId()) {
-				organizationMembers.remove(user);
-			}
-		}
 		initUser(selectedUser);
 		return "/identity/organization-members.xhtml?faces-redirect=true";
 	}
 
 	public String updateUser() {
-		return "/identity/update-identity.xhtml?faces-redirect=true";
+		return "/identity/update-user.xhtml?faces-redirect=true";
 	}
 
 	public String doUpdateUser() {
