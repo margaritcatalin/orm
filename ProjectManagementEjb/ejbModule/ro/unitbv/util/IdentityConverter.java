@@ -49,6 +49,13 @@ public class IdentityConverter implements GenericConverter<Identity, IdentityDTO
 
 			dto.setResources(resourceConverter.directConvertAll(identity.getResources()));
 		}
+		if (Objects.nonNull(identity.getRoles()) && identity.getRoles().stream()
+				.filter(role -> role.getRoleName().equalsIgnoreCase("CEO")).findAny().isPresent()) {
+			dto.setAdmin(true);
+		} else {
+			dto.setAdmin(false);
+
+		}
 		return dto;
 	}
 

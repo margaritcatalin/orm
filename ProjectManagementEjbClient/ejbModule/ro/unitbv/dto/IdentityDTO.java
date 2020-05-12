@@ -14,6 +14,7 @@ public class IdentityDTO implements Serializable {
 	private OrganizationDTO organization;
 	private List<ResourceDTO> resources;
 	private List<RoleDTO> roles;
+	private boolean isAdmin;
 
 	public IdentityDTO() {
 		super();
@@ -116,6 +117,13 @@ public class IdentityDTO implements Serializable {
 		this.roles = roles;
 	}
 
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+	
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 	@Override
 	public String toString() {
 		return "IdentityDTO [identityId=" + identityId + ", email=" + email + ", firstname=" + firstname + ", lastname="

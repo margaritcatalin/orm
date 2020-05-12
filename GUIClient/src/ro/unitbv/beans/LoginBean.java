@@ -1,6 +1,7 @@
 package ro.unitbv.beans;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -30,9 +31,18 @@ public class LoginBean implements Serializable {
 		try {
 			identiyDTO = identityDAORemote.loginIdentity(loginDTO);
 			facesContext.getExternalContext().getSessionMap().put("identiyDTO", identiyDTO);
-			// if userDTO is admin
-			System.out.println("admin logged");
-			return "/organization/organizations.xhtml?faces-redirect=true";
+			if (identiyDTO.getRoles().stream().filter(role -> role.getRoleName().equalsIgnoreCase("CEO")).findAny()
+					.isPresent()) {
+				return "/organization/organizations.xhtml?faces-redirect=true";
+			} else if (Objects.nonNull(identiyDTO.getOrganization())) {
+				if (Objects.nonNull(facesContext.getExternalContext().getSessionMap().get("selectedOrganization"))) {
+					facesContext.getExternalContext().getSessionMap().remove("selectedOrganization");
+				}
+				facesContext.getExternalContext().getSessionMap().put("selectedOrganization",
+						identiyDTO.getOrganization());
+				return "/identity/organization-members.xhtml?faces-redirect=true";
+			}
+			return "";
 
 		} catch (LoginException e) {
 			System.out.println("Invalid username or password");

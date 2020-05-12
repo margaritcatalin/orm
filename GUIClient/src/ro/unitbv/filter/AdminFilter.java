@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ro.unitbv.beans.LoginBean;
 
-@WebFilter(urlPatterns = { "/adminFilter/*", "/authtype/*", "/identity/*", "/organization/*", "/right/*", "/role/*",
+@WebFilter(urlPatterns = { "/adminFilter/*", "/authtype/*", "/organization/*", "/right/*", "/role/*",
 		"/resource/*" })
 public class AdminFilter implements Filter {
 
@@ -26,13 +26,10 @@ public class AdminFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-		System.out.println("filter called");
 		LoginBean loginBean = (LoginBean) httpServletRequest.getSession().getAttribute("loginBean");
 
-		if (Objects.nonNull(loginBean) && Objects.nonNull(loginBean.getIdentityDTO())) {
-			// and has the role admin
-
-			System.out.println("admin logged");
+		if (Objects.nonNull(loginBean) && Objects.nonNull(loginBean.getIdentityDTO()) && loginBean.getIdentityDTO()
+				.getRoles().stream().filter(role -> role.getRoleName().equalsIgnoreCase("CEO")).findAny().isPresent()) {
 			filterChain.doFilter(servletRequest, servletResponse);
 		} else {
 
