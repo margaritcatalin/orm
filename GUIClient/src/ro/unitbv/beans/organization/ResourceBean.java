@@ -20,26 +20,24 @@ public class ResourceBean implements Serializable {
 	private ResourceDTO resourceDTO = new ResourceDTO();
 	private ResourceDTO selectedResource = new ResourceDTO();
 	private List<ResourceDTO> allResources;
-
 	@EJB
 	ResourceDaoRemote resourceDaoRemote;
 
 	@PostConstruct
 	public void init() {
-		allResources = resourceDaoRemote.findAll();
+		initAllList();
 	}
 
 	public String createResource() {
 		ResourceDTO user = resourceDaoRemote.create(resourceDTO);
-		allResources.add(user);
-		// TODO set AuthType
+		initAllList();
 		initResource(resourceDTO);
 		return "/resource/resources.xhtml?faces-redirect=true";
 	}
 
 	public String deleteResource() {
-		allResources.remove(selectedResource);
 		resourceDaoRemote.delete(selectedResource.getResourceId());
+		initAllList();
 		initResource(selectedResource);
 		return "/resource/resources.xhtml?faces-redirect=true";
 	}
@@ -50,12 +48,7 @@ public class ResourceBean implements Serializable {
 
 	public String doUpdateResource() {
 		resourceDaoRemote.update(selectedResource);
-		for (ResourceDTO resource : allResources) {
-			if (selectedResource.getResourceId() == resource.getResourceId()) {
-				resource.setResourceName(selectedResource.getResourceName());
-				// TODO update AuthType
-			}
-		}
+		initAllList();
 		initResource(selectedResource);
 		return "/resource/resources.xhtml?faces-redirect=true";
 	}
@@ -66,6 +59,10 @@ public class ResourceBean implements Serializable {
 
 	private void initResource(ResourceDTO resource) {
 		resource.setResourceName("");
+	}
+
+	private void initAllList() {
+		allResources = resourceDaoRemote.findAll();
 	}
 
 	public ResourceDTO getResourceDTO() {

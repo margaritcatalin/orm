@@ -59,6 +59,13 @@
 									validatorMessage="Enter Role Description"
 									value="#{roleBean.selectedRole.roleDescription}"></h:inputText>
 							</div>
+							<div class="form-group">
+								<label for="name">Resource Authorization Type</label>
+								<h:selectManyListbox class="form-control" value="#{role.selectedRole.rights}">
+									<f:selectItems value="#{rightBean.allRights}" var="right"
+										itemLabel="#{right.rightName}" itemValue="#{right}" />
+								</h:selectManyListbox>
+							</div>
 							<div class="row d-flex justify-content-center">
 								<h:commandButton class="btn btn-primary btn-md" value="Create"
 									action="#{roleBean.doUpdateRole}"></h:commandButton>

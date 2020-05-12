@@ -8,5 +8,6 @@
 		<class>ro.unitbv.model.Resource</class>
 		<class>ro.unitbv.model.Right</class>
 		<class>ro.unitbv.model.Role</class>
+		<class>ro.unitbv.model.Identityroleresource</class>
 	</persistence-unit>
 </persistence>

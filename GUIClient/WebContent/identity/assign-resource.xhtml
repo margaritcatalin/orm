@@ -44,33 +44,29 @@
 			<div class="col">
 				<div class="card-create bg-dark">
 					<div class="card-body text-white">
-						<h:form label="createRoleForm" class="form">
+						<h:form label="assignResourceForm" class="form">
 							<div class="form-group">
-								<label for="name">Role Name</label>
-								<h:inputText class="form-control" required="true"
-									label="Role Name" placeholder="Role Name"
-									validatorMessage="Enter Role Name"
-									value="#{roleBean.roleDTO.roleName}"></h:inputText>
+								<label for="name">Resource</label>
+								<h:selectOneMenu class="form-control"
+									value="#{identityBean.assingResource.resourceId}">
+									<f:selectItems value="#{resourceBean.allResources}" var="res"
+										itemLabel="#{res.resourceName}" itemValue="#{res.resourceId}" />
+								</h:selectOneMenu>
 							</div>
 							<div class="form-group">
-								<label for="name">Role Description</label>
-								<h:inputText class="form-control" required="true"
-									label="Role Description" placeholder="Role Description"
-									validatorMessage="Enter Role Description"
-									value="#{roleBean.roleDTO.roleDescription}"></h:inputText>
+								<label for="name">Role</label>
+								<h:selectOneMenu class="form-control"
+									value="#{identityBean.assingResource.roleId}">
+									<f:selectItems value="#{roleBean.allRoles}" var="role"
+										itemLabel="#{role.roleName}" itemValue="#{role.roleId}" />
+								</h:selectOneMenu>
 							</div>
-							<div class="form-group">
-								<label for="name">Role Rights</label>
-								<h:selectManyListbox  class="form-control" value="#{roleBean.roleDTO.rights}">
-									<f:selectItems value="#{rightBean.allRights}" var="right"
-										itemLabel="#{right.rightName}" itemValue="#{right}" />
-								</h:selectManyListbox>
-							</div>
+
 							<div class="row d-flex justify-content-center">
-								<h:commandButton class="btn btn-primary btn-md" value="Create"
-									action="#{roleBean.createRole}"></h:commandButton>
+								<h:commandButton class="btn btn-primary btn-md" value="Assign"
+									action="#{identityBean.doAssignResource}"></h:commandButton>
 								<a class="btn btn-danger btn-md" style="margin-left: 5px;"
-									href="/GUIClient/role/roles.xhtml">Back</a>
+									href="/GUIClient/identity/organization-members.xhtml">Back</a>
 								<h:messages infoStyle="color:darkgreen"
 									errorStyle="color:darkred"></h:messages>
 							</div>

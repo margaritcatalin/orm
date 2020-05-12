@@ -47,8 +47,8 @@
 	</nav>
 	<div class="backgroud-body">
 		<h1 class="table-title">
-			User Roles <a class="btn btn-light btn-circle btn-sm"
-				href="/GUIClient/role/create-role.xhtml"> <svg
+			Resources <a class="btn btn-light btn-circle btn-sm"
+				href="/GUIClient/identity/assign-resource.xhtml"> <svg
 					class="bi bi-person-plus-fill" width="1em" height="1em"
 					viewBox="0 0 16 16" fill="currentColor"
 					xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd"
@@ -65,11 +65,8 @@
 						border="0">
 						<thead>
 							<tr>
-								<th class="th-style">Code</th>
-								<th class="th-style">Role Name</th>
-								<th class="th-style">Role Description</th>
-								<th class="th-style">Role Rights</th>
-								<th class="th-style">Actions</th>
+								<th class="th-style">Resource</th>
+								<th class="th-style">Roles</th>
 							</tr>
 						</thead>
 					</table>
@@ -78,28 +75,14 @@
 					<table class="table-body" cellpadding="0" cellspacing="0"
 						border="0">
 						<tbody>
-							<ui:repeat value="#{roleBean.allRoles}" var="role">
+							<ui:repeat
+								value="#{identityBean.resourcesRoles.entrySet().toArray()}"
+								var="entry">
 								<tr>
-									<td class="td-style"><h:outputText value="#{role.roleId}" /></td>
+									<td class="td-style"><h:outputText value="#{entry.key}" /></td>
 									<td class="td-style"><h:outputText
-											value="#{role.roleName}" /></td>
-									<td class="td-style"><h:outputText
-											value="#{role.roleDescription}" /></td>
-									<td class="td-style"><ui:repeat value="#{role.rights}"
-											var="right">
-											 | <h:outputText value="#{right.rightName}" />
-										</ui:repeat></td>
-									<td class="td-style"><h:commandButton
-											action="#{roleBean.updateRole}" value="Update"
-											class="btn btn-light btn-sm">
-											<f:setPropertyActionListener
-												target="#{roleBean.selectedRole}" value="#{role}" />
-										</h:commandButton> <span> </span> <h:commandButton
-											action="#{roleBean.deleteRole}" value="Delete"
-											class="btn btn-light btn-sm">
-											<f:setPropertyActionListener
-												target="#{roleBean.selectedRole}" value="#{role}" />
-										</h:commandButton></td>
+											value="#{entry.value}" />
+									</td>
 								</tr>
 							</ui:repeat>
 						</tbody>

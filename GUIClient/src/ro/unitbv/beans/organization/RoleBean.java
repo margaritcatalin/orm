@@ -1,6 +1,7 @@
 package ro.unitbv.beans.organization;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import ro.unitbv.dao.RoleDaoRemote;
+import ro.unitbv.dto.RightDTO;
 import ro.unitbv.dto.RoleDTO;
 
 @ManagedBean
@@ -26,19 +28,19 @@ public class RoleBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		allRoles = roleDaoRemote.findAll();
+		initAllList();
 	}
 
 	public String createRole() {
 		RoleDTO role = roleDaoRemote.create(roleDTO);
-		allRoles.add(role);
+		initAllList();
 		initRole(role);
 		return "/role/roles.xhtml?faces-redirect=true";
 	}
 
 	public String deleteRole() {
-		allRoles.remove(selectedRole);
 		roleDaoRemote.delete(selectedRole.getRoleId());
+		initAllList();
 		initRole(selectedRole);
 		return "/role/roles.xhtml?faces-redirect=true";
 	}
@@ -49,13 +51,7 @@ public class RoleBean implements Serializable {
 
 	public String doUpdateRole() {
 		roleDaoRemote.update(selectedRole);
-		for (RoleDTO role : allRoles) {
-			if (selectedRole.getRoleId() == role.getRoleId()) {
-				role.setRoleName(selectedRole.getRoleName());
-				role.setRoleDescription(selectedRole.getRoleDescription());
-				// TODO update Rights
-			}
-		}
+		initAllList();
 		initRole(selectedRole);
 		return "/role/roles.xhtml?faces-redirect=true";
 	}
@@ -67,6 +63,11 @@ public class RoleBean implements Serializable {
 	private void initRole(RoleDTO role) {
 		role.setRoleName("");
 		role.setRoleDescription("");
+		role.setRights(new ArrayList<RightDTO>());
+	}
+
+	void initAllList() {
+		allRoles = roleDaoRemote.findAll();
 	}
 
 	public RoleDTO getRoleDTO() {

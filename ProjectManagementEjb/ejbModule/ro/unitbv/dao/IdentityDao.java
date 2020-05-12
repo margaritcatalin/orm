@@ -1,7 +1,9 @@
 package ro.unitbv.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -18,7 +20,10 @@ import ro.unitbv.dto.LoginDTO;
 import ro.unitbv.dto.OrganizationDTO;
 import ro.unitbv.exception.LoginException;
 import ro.unitbv.model.Identity;
+import ro.unitbv.model.Identityroleresource;
 import ro.unitbv.model.Organization;
+import ro.unitbv.model.Resource;
+import ro.unitbv.model.Role;
 import ro.unitbv.util.IdentityConverter;
 
 /**
@@ -67,6 +72,17 @@ public class IdentityDao implements IdentityDaoRemote {
 				user.setOrganization(organization);
 			}
 		}
+		/*
+		 * if (Objects.nonNull(identityDTO.getResources())) { List<Resource> resources =
+		 * new ArrayList<Resource>(); for (ResourceDTO res : identityDTO.getResources())
+		 * { Resource resource = entityManager.find(Resource.class,
+		 * res.getResourceId()); if (Objects.nonNull(resource)) {
+		 * resources.add(resource); } } user.setResources(resources); } if
+		 * (Objects.nonNull(identityDTO.getRoles())) { List<Role> roles = new
+		 * ArrayList<Role>(); for (RoleDTO rol : identityDTO.getRoles()) { Role role =
+		 * entityManager.find(Role.class, rol.getRoleId()); if (Objects.nonNull(role)) {
+		 * roles.add(role); } } user.setRoles(roles); }
+		 */
 		entityManager.persist(user);
 		entityManager.flush();
 		identityDTO.setIdentityId(user.getIdentityId());
@@ -84,6 +100,17 @@ public class IdentityDao implements IdentityDaoRemote {
 				identity.setOrganization(organization);
 			}
 		}
+		/*
+		 * if (Objects.nonNull(identityDTO.getResources())) { List<Resource> resources =
+		 * new ArrayList<Resource>(); for (ResourceDTO res : identityDTO.getResources())
+		 * { Resource resource = entityManager.find(Resource.class,
+		 * res.getResourceId()); if (Objects.nonNull(resource)) {
+		 * resources.add(resource); } } identity.setResources(resources); } if
+		 * (Objects.nonNull(identityDTO.getRoles())) { List<Role> roles = new
+		 * ArrayList<Role>(); for (RoleDTO rol : identityDTO.getRoles()) { Role role =
+		 * entityManager.find(Role.class, rol.getRoleId()); if (Objects.nonNull(role)) {
+		 * roles.add(role); } } identity.setRoles(roles); }
+		 */
 		identity = entityManager.merge(identity);
 		return identityDTO;
 	}
@@ -120,4 +147,38 @@ public class IdentityDao implements IdentityDaoRemote {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public IdentityDTO assignResourcesToUser(Integer userId, Integer resourceId, Integer roleId) {
+		Identityroleresource resourceWithRole = new Identityroleresource();
+		resourceWithRole.setIdentityId(userId);
+		resourceWithRole.setResourceId(resourceId);
+		resourceWithRole.setRoleId(roleId);
+		entityManager.persist(resourceWithRole);
+		entityManager.flush();
+		return identityConverter.directConvert(entityManager.find(Identity.class, userId));
+	}
+
+	@Override
+	public Map<String, String> getAllUserResources(Integer userId) {
+		Map<String, String> uResources = new HashMap<String, String>();
+		Query query = entityManager
+				.createQuery("SELECT ires FROM Identityroleresource ires WHERE ires.identityId=:userid")
+				.setParameter("userid", userId);
+		List<Identityroleresource> userResources = query.getResultList();
+		for (Identityroleresource uRes : userResources) {
+			Resource res = entityManager.find(Resource.class, uRes.getResourceId());
+			Role rol = entityManager.find(Role.class, uRes.getRoleId());
+			if (Objects.isNull(uResources.get("[" + res.getResourceId() + "] " + res.getResourceName()))) {
+				uResources.put("[" + res.getResourceId() + "] " + res.getResourceName(), rol.getRoleName());
+			} else {
+				uResources.put("[" + res.getResourceId() + "] " + res.getResourceName(),
+						uResources.get("[" + res.getResourceId() + "] " + res.getResourceName()) + ", "
+								+ rol.getRoleName());
+
+			}
+
+		}
+		return uResources;
+
+	}
 }

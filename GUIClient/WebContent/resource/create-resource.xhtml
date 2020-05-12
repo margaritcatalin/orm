@@ -52,7 +52,13 @@
 									validatorMessage="Enter Resource Name"
 									value="#{resourceBean.resourceDTO.resourceName}"></h:inputText>
 							</div>
-
+							<div class="form-group">
+								<label for="name">Resource Authorization Types</label>
+								<h:selectManyListbox class="form-control" value="#{resourceBean.resourceDTO.authtypes}">
+									<f:selectItems value="#{authTypeBean.allAuthTypes}" var="auth"
+										itemLabel="#{auth.type}" itemValue="#{auth}" />
+								</h:selectManyListbox>
+							</div>
 							<div class="row d-flex justify-content-center">
 								<h:commandButton class="btn btn-primary btn-md" value="Create"
 									action="#{resourceBean.createResource}"></h:commandButton>

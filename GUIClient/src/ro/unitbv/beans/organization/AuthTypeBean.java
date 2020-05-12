@@ -26,19 +26,19 @@ public class AuthTypeBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		allAuthTypes = authTypeDaoRemote.findAll();
+		initAllList();
 	}
 
 	public String createAuth() {
 		AuthTypeDTO auth = authTypeDaoRemote.create(authDTO);
-		allAuthTypes.add(auth);
+		initAllList();
 		initAuth(auth);
 		return "/authtype/auth-types.xhtml?faces-redirect=true";
 	}
 
 	public String deleteAuth() {
-		allAuthTypes.remove(selectedAuth);
 		authTypeDaoRemote.delete(selectedAuth.getAuthTypesId());
+		initAllList();
 		initAuth(selectedAuth);
 		return "/authtype/auth-types.xhtml?faces-redirect=true";
 	}
@@ -49,11 +49,7 @@ public class AuthTypeBean implements Serializable {
 
 	public String doUpdateAuth() {
 		authTypeDaoRemote.update(selectedAuth);
-		for (AuthTypeDTO auth : allAuthTypes) {
-			if (selectedAuth.getAuthTypesId() == auth.getAuthTypesId()) {
-				auth.setType(selectedAuth.getType());
-			}
-		}
+		initAllList();
 		initAuth(selectedAuth);
 		return "/authtype/auth-types.xhtml?faces-redirect=true";
 	}
@@ -64,6 +60,10 @@ public class AuthTypeBean implements Serializable {
 
 	private void initAuth(AuthTypeDTO auth) {
 		auth.setType("");
+	}
+	
+	void initAllList() {
+		allAuthTypes = authTypeDaoRemote.findAll();
 	}
 
 	public AuthTypeDTO getAuthDTO() {

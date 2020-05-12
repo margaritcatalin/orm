@@ -31,18 +31,19 @@ public class OrganizationBean implements Serializable {
 		if (Objects.nonNull(facesContext.getExternalContext().getSessionMap().get("selectedOrganization"))) {
 			facesContext.getExternalContext().getSessionMap().remove("selectedOrganization");
 		}
-		organizations = organizationDAORemote.findAll();
+		initAllList();
 	}
 
 	public String createOrganization() {
-		organizations.add(organizationDAORemote.create(organizationDTO));
+		organizationDAORemote.create(organizationDTO);
+		initAllList();
 		initOrganization(organizationDTO);
 		return "/organization/organizations.xhtml?faces-redirect=true";
 	}
 
 	public String deleteOrganization() {
-		organizations.remove(selectedOrganization);
 		organizationDAORemote.delete(selectedOrganization.getOrganizationId());
+		initAllList();
 		initOrganization(selectedOrganization);
 		return "/organization/organizations.xhtml?faces-redirect=true";
 	}
@@ -53,12 +54,7 @@ public class OrganizationBean implements Serializable {
 
 	public String doUpdateOrganization() {
 		organizationDAORemote.update(selectedOrganization);
-		for (OrganizationDTO org : organizations) {
-			if (selectedOrganization.getOrganizationId() == org.getOrganizationId()) {
-				org.setOrganizationName(selectedOrganization.getOrganizationName());
-				org.setCui(selectedOrganization.getCui());
-			}
-		}
+		initAllList();
 		initOrganization(selectedOrganization);
 		return "/organization/organizations.xhtml?faces-redirect=true";
 	}
@@ -70,6 +66,10 @@ public class OrganizationBean implements Serializable {
 		}
 		facesContext.getExternalContext().getSessionMap().put("selectedOrganization", selectedOrganization);
 		return "/identity/organization-members.xhtml?faces-redirect=true";
+	}
+
+	public void initAllList() {
+		organizations = organizationDAORemote.findAll();
 	}
 
 	public OrganizationDTO getOrganizationDTO() {

@@ -67,6 +67,7 @@
 							<tr>
 								<th class="th-style">Code</th>
 								<th class="th-style">Resource Name</th>
+								<th class="th-style">Resource Authorizations</th>
 								<th class="th-style">Actions</th>
 							</tr>
 						</thead>
@@ -82,9 +83,13 @@
 											value="#{res.resourceId}" /></td>
 									<td class="td-style"><h:outputText
 											value="#{res.resourceName}" /></td>
+									<td class="td-style"><ui:repeat value="#{res.authtypes}"
+											var="auth">
+											 | <h:outputText value="#{auth.type}" />
+										</ui:repeat></td>
 									<td class="td-style"><h:commandButton
-											action="#{resourceBean.updateResource}"
-											value="Update" class="btn btn-light btn-sm">
+											action="#{resourceBean.updateResource}" value="Update"
+											class="btn btn-light btn-sm">
 											<f:setPropertyActionListener
 												target="#{resourceBean.selectedResource}" value="#{res}" />
 										</h:commandButton> <span> </span> <h:commandButton

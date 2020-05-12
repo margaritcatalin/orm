@@ -2,6 +2,7 @@ package ro.unitbv.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.ejb.LocalBean;
@@ -10,7 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import ro.unitbv.dto.RightDTO;
 import ro.unitbv.dto.RoleDTO;
+import ro.unitbv.model.Right;
 import ro.unitbv.model.Role;
 import ro.unitbv.util.RoleConverter;
 
@@ -48,6 +51,16 @@ public class RoleDao implements RoleDaoRemote {
 	@Override
 	public RoleDTO create(RoleDTO entity) {
 		Role role = roleConverter.inversConvert(entity);
+		if (Objects.nonNull(entity.getRights())) {
+			List<Right> rights = new ArrayList<Right>();
+			for (RightDTO right : entity.getRights()) {
+				Right rightModel = entityManager.find(Right.class, right.getRightId());
+				if (Objects.nonNull(rightModel)) {
+					rights.add(rightModel);
+				}
+			}
+			role.setRights(rights);
+		}
 		entityManager.persist(role);
 		entityManager.flush();
 		entity.setRoleId(role.getRoleId());
@@ -58,6 +71,16 @@ public class RoleDao implements RoleDaoRemote {
 	public RoleDTO update(RoleDTO entity) {
 		Role role = roleConverter.inversConvert(entity);
 		role.setRoleId(entity.getRoleId());
+		if (Objects.nonNull(entity.getRights())) {
+			List<Right> rights = new ArrayList<Right>();
+			for (RightDTO right : entity.getRights()) {
+				Right rightModel = entityManager.find(Right.class, right.getRightId());
+				if (Objects.nonNull(rightModel)) {
+					rights.add(rightModel);
+				}
+			}
+			role.setRights(rights);
+		}
 		role = entityManager.merge(role);
 		return entity;
 	}

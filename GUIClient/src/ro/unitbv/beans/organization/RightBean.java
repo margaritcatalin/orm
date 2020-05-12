@@ -26,19 +26,19 @@ public class RightBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		allRights = rightDaoRemote.findAll();
+		initAllList();
 	}
 
 	public String createRight() {
 		RightDTO right = rightDaoRemote.create(rightDTO);
-		allRights.add(right);
+		initAllList();
 		initRight(rightDTO);
 		return "/right/rights.xhtml?faces-redirect=true";
 	}
 
 	public String deleteRight() {
-		allRights.remove(selectedRight);
 		rightDaoRemote.delete(selectedRight.getRightId());
+		initAllList();
 		initRight(selectedRight);
 		return "/right/rights.xhtml?faces-redirect=true";
 	}
@@ -49,12 +49,7 @@ public class RightBean implements Serializable {
 
 	public String doUpdateUser() {
 		rightDaoRemote.update(selectedRight);
-		for (RightDTO right : allRights) {
-			if (selectedRight.getRightId() == right.getRightId()) {
-				right.setRightName(selectedRight.getRightName());
-				right.setRightDescription(selectedRight.getRightDescription());
-			}
-		}
+		initAllList();
 		initRight(selectedRight);
 		return "/right/rights.xhtml?faces-redirect=true";
 	}
@@ -66,6 +61,10 @@ public class RightBean implements Serializable {
 	private void initRight(RightDTO right) {
 		right.setRightName("");
 		right.setRightDescription("");
+	}
+
+	void initAllList() {
+		allRights = rightDaoRemote.findAll();
 	}
 
 	public RightDTO getRightDTO() {
