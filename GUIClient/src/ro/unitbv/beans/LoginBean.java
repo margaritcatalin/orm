@@ -10,8 +10,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import ro.unitbv.dao.IdentityDaoRemote;
+import ro.unitbv.dao.RegistrationRequestDaoRemote;
 import ro.unitbv.dto.IdentityDTO;
 import ro.unitbv.dto.LoginDTO;
+import ro.unitbv.dto.RegistrationRequestDTO;
 import ro.unitbv.exception.LoginException;
 
 @ManagedBean
@@ -20,9 +22,11 @@ public class LoginBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	LoginDTO loginDTO = new LoginDTO();
-
+	RegistrationRequestDTO rqDTO = new RegistrationRequestDTO();
 	@EJB
 	IdentityDaoRemote identityDAORemote;
+	@EJB
+	RegistrationRequestDaoRemote registrationRequestDaoRemote;
 
 	IdentityDTO identiyDTO;
 
@@ -52,6 +56,22 @@ public class LoginBean implements Serializable {
 
 	}
 
+	public String registerUser() {
+		RegistrationRequestDTO user = registrationRequestDaoRemote.create(rqDTO);
+		initUser(rqDTO);
+		return "/index.xhtml?faces-redirect=true";
+	}
+
+	private void initUser(RegistrationRequestDTO rq) {
+		rq.setFirstname("");
+		rq.setLastname("");
+		rq.setUsername("");
+		rq.setOrganization("");
+		rq.setRole("");
+		rq.setPassword("");
+		rq.setResource("");
+	}
+
 	public String logout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		identiyDTO = null;
@@ -72,6 +92,14 @@ public class LoginBean implements Serializable {
 
 	public void setIdentityDTO(IdentityDTO identiyDTO) {
 		this.identiyDTO = identiyDTO;
+	}
+
+	public RegistrationRequestDTO getRqDTO() {
+		return rqDTO;
+	}
+
+	public void setRqDTO(RegistrationRequestDTO rqDTO) {
+		this.rqDTO = rqDTO;
 	}
 
 }

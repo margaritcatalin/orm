@@ -18,16 +18,26 @@
 	</a>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/organization/organizations.xhtml">Organizations</a>
 			</li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/resource/resources.xhtml">Resources</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/role/roles.xhtml">Roles</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/right/rights.xhtml">Rights</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/authtype/auth-types.xhtml">Authorization Types</a></li>
 			<li style="float: right;" class="nav-item"><h:form>
 					<h:commandButton value="Logout" action="#{loginBean.logout}"
@@ -51,7 +61,8 @@
 							</div>
 							<div class="form-group">
 								<label for="name">Resource Authorization Type</label>
-								<h:selectManyListbox class="form-control" value="#{resourceBean.selectedResource.authtypes}">
+								<h:selectManyListbox class="form-control"
+									value="#{resourceBean.selectedResource.authtypes}">
 									<f:selectItems value="#{authTypeBean.allAuthTypes}" var="auth"
 										itemLabel="#{auth.type}" itemValue="#{auth}" />
 								</h:selectManyListbox>

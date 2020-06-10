@@ -18,16 +18,26 @@
 	</a>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/organization/organizations.xhtml">Organizations</a>
 			</li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/resource/resources.xhtml">Resources</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/role/roles.xhtml">Roles</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/right/rights.xhtml">Rights</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/authtype/auth-types.xhtml">Authorization Types</a></li>
 			<li style="float: right;" class="nav-item"><h:form>
 					<h:commandButton value="Logout" action="#{loginBean.logout}"
@@ -58,7 +68,8 @@
 							</div>
 							<div class="form-group">
 								<label for="name">Role Rights</label>
-								<h:selectManyListbox  class="form-control" value="#{roleBean.roleDTO.rights}">
+								<h:selectManyListbox class="form-control"
+									value="#{roleBean.roleDTO.rights}">
 									<f:selectItems value="#{rightBean.allRights}" var="right"
 										itemLabel="#{right.rightName}" itemValue="#{right}" />
 								</h:selectManyListbox>

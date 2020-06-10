@@ -24,20 +24,37 @@
 	</a>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: hidden;':'visibility: visible;'}" class="nav-item"><a class="nav-link"
-				href="/GUIClient/identity/organization-members.xhtml">My Organization</a>
-			</li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: hidden;':'visibility: visible;'}"
+				class="nav-item"><a class="nav-link"
+				href="/GUIClient/identity/organization-members.xhtml">My
+					Organization</a></li>
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/organization/organizations.xhtml">Organizations</a>
 			</li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/resource/resources.xhtml">Resources</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/role/roles.xhtml">Roles</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/right/rights.xhtml">Rights</a></li>
-			<li style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}" class="nav-item"><a class="nav-link"
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
 				href="/GUIClient/authtype/auth-types.xhtml">Authorization Types</a></li>
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
+				href="/GUIClient/identity/register-request.xhtml">Register
+					Requests</a></li>
 			<li style="float: right;" class="nav-item"><h:form>
 					<h:commandButton value="Logout" action="#{loginBean.logout}"
 						class="btn btn-default" />
@@ -49,7 +66,8 @@
 		<h1 class="table-title">
 			<span style="color: #28a745"><h:outputText
 					value="#{identityBean.selectedUser.firstname}" /> <h:outputText
-					value="#{identityBean.selectedUser.lastname}" /></span> Resources <a class="btn btn-light btn-circle btn-sm"
+					value="#{identityBean.selectedUser.lastname}" /></span> Resources <a
+				class="btn btn-light btn-circle btn-sm"
 				href="/GUIClient/identity/assign-resource.xhtml"> <svg
 					class="bi bi-person-plus-fill" width="1em" height="1em"
 					viewBox="0 0 16 16" fill="currentColor"
@@ -82,8 +100,7 @@
 								var="entry">
 								<tr>
 									<td class="td-style"><h:outputText value="#{entry.key}" /></td>
-									<td class="td-style"><h:outputText
-											value="#{entry.value}" />
+									<td class="td-style"><h:outputText value="#{entry.value}" />
 									</td>
 								</tr>
 							</ui:repeat>

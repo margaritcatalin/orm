@@ -13,8 +13,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import ro.unitbv.dao.IdentityDaoRemote;
+import ro.unitbv.dao.OrganizationDaoRemote;
+import ro.unitbv.dao.RegistrationRequestDaoRemote;
 import ro.unitbv.dto.IdentityDTO;
 import ro.unitbv.dto.OrganizationDTO;
+import ro.unitbv.dto.RegistrationRequestDTO;
 import ro.unitbv.dto.ResourceDTO;
 import ro.unitbv.dto.ResourceWithRoleDTO;
 import ro.unitbv.dto.RoleDTO;
@@ -31,8 +34,15 @@ public class IdentityBean implements Serializable {
 	private OrganizationDTO currentOrganization = new OrganizationDTO();
 	private ResourceWithRoleDTO assingResource = new ResourceWithRoleDTO();
 	private Map<String, String> resourcesRoles;
+	private List<RegistrationRequestDTO> rqList;
+	private RegistrationRequestDTO selectedRQ = new RegistrationRequestDTO();
+
 	@EJB
 	IdentityDaoRemote identityDaoRemote;
+	@EJB
+	RegistrationRequestDaoRemote registrationRequestDaoRemote;
+	@EJB
+	OrganizationDaoRemote organizationDAORemote;
 
 	@PostConstruct
 	public void init() {
@@ -40,6 +50,7 @@ public class IdentityBean implements Serializable {
 		currentOrganization = (OrganizationDTO) facesContext.getExternalContext().getSessionMap()
 				.get("selectedOrganization");
 		initAllList();
+		rqList = registrationRequestDaoRemote.findAll();
 	}
 
 	public String createUser() {
@@ -92,7 +103,39 @@ public class IdentityBean implements Serializable {
 	}
 
 	public String organizationMembers() {
+		rqList = registrationRequestDaoRemote.findAll();
 		return "/identity/organization-members.xhtml?faces-redirect=true";
+	}
+
+	public String registrationRequests() {
+		return "/identity/register-requests.xhtml?faces-redirect=true";
+	}
+
+	public String acceptUserRegistration() {
+		OrganizationDTO orgDTO = organizationDAORemote.findById(Integer.valueOf(selectedRQ.getOrganization()));
+
+		IdentityDTO idDTO = new IdentityDTO();
+		idDTO.setEmail(
+				selectedRQ.getFirstname() + selectedRQ.getLastname() + "@" + orgDTO.getOrganizationName() + ".com");
+		idDTO.setUsername(selectedRQ.getUsername());
+		idDTO.setFirstname(selectedRQ.getFirstname());
+		idDTO.setLastname(selectedRQ.getLastname());
+		idDTO.setPassword(selectedRQ.getPassword());
+		IdentityDTO user = identityDaoRemote.create(idDTO);
+		user.setOrganization(orgDTO);
+		identityDaoRemote.update(user);
+		identityDaoRemote.assignResourcesToUser(user.getIdentityId(), Integer.valueOf(selectedRQ.getResource()),
+				Integer.valueOf(selectedRQ.getRole()));
+		registrationRequestDaoRemote.delete(selectedRQ.getIdregistrationrequest());
+		initAllList();
+		rqList = registrationRequestDaoRemote.findAll();
+		return "/identity/registerRequest.xhtml?faces-redirect=true";
+	}
+
+	public String declineUserRegistration() {
+		registrationRequestDaoRemote.delete(selectedRQ.getIdregistrationrequest());
+		rqList = registrationRequestDaoRemote.findAll();
+		return "/identity/registerRequest.xhtml?faces-redirect=true";
 	}
 
 	private void initUser(IdentityDTO identity) {
@@ -157,4 +200,21 @@ public class IdentityBean implements Serializable {
 	public void setResourcesRoles(Map<String, String> resourcesRoles) {
 		this.resourcesRoles = resourcesRoles;
 	}
+
+	public List<RegistrationRequestDTO> getRqList() {
+		return rqList;
+	}
+
+	public void setRqList(List<RegistrationRequestDTO> rqList) {
+		this.rqList = rqList;
+	}
+
+	public RegistrationRequestDTO getSelectedRQ() {
+		return selectedRQ;
+	}
+
+	public void setSelectedRQ(RegistrationRequestDTO selectedRQ) {
+		this.selectedRQ = selectedRQ;
+	}
+
 }

@@ -25,6 +25,11 @@
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
 			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: hidden;':'visibility: visible;'}"
+				class="nav-item"><a class="nav-link"
+				href="/GUIClient/identity/organization-members.xhtml">My
+					Organization</a></li>
+			<li
 				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
 				class="nav-item"><a class="nav-link"
 				href="/GUIClient/organization/organizations.xhtml">Organizations</a>
@@ -45,6 +50,11 @@
 				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
 				class="nav-item"><a class="nav-link"
 				href="/GUIClient/authtype/auth-types.xhtml">Authorization Types</a></li>
+			<li
+				style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+				class="nav-item"><a class="nav-link"
+				href="/GUIClient/identity/register-request.xhtml">Register
+					Requests</a></li>
 			<li style="float: right;" class="nav-item"><h:form>
 					<h:commandButton value="Logout" action="#{loginBean.logout}"
 						class="btn btn-default" />
@@ -54,16 +64,8 @@
 	</nav>
 	<div class="backgroud-body">
 		<h1 class="table-title">
-			Organizations <a class="btn btn-light btn-circle btn-sm"
-				href="/GUIClient/organization/create-org.xhtml"> <svg
-					class="bi bi-person-plus-fill" width="1em" height="1em"
-					viewBox="0 0 16 16" fill="currentColor"
-					xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd"
-					d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 100-6 3 3 0 000 6zm7.5-3a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-2a.5.5 0 010-1H13V5.5a.5.5 0 01.5-.5z"
-					clip-rule="evenodd" /> <path fill-rule="evenodd"
-					d="M13 7.5a.5.5 0 01.5-.5h2a.5.5 0 010 1H14v1.5a.5.5 0 01-1 0v-2z"
-					clip-rule="evenodd" /> </svg>
-			</a>
+			<span style="color: #28a745"><h:outputText
+					value="Registration" /></span> Requests
 		</h1>
 		<h:form id="tableForm">
 			<div class="table-section">
@@ -73,8 +75,9 @@
 						<thead>
 							<tr>
 								<th class="th-style">Code</th>
-								<th class="th-style">Organization Name</th>
-								<th class="th-style">Organization CUI</th>
+								<th class="th-style">Username</th>
+								<th class="th-style">First Name</th>
+								<th class="th-style">Last Name</th>
 								<th class="th-style">Actions</th>
 							</tr>
 						</thead>
@@ -84,31 +87,28 @@
 					<table class="table-body" cellpadding="0" cellspacing="0"
 						border="0">
 						<tbody>
-							<ui:repeat value="#{organizationBean.organizations}" var="org">
+							<ui:repeat value="#{identityBean.rqList}" var="user">
 								<tr>
 									<td class="td-style"><h:outputText
-											value="#{org.organizationId}" /></td>
+											value="#{user.idregistrationrequest}" /></td>
 									<td class="td-style"><h:outputText
-											value="#{org.organizationName}" /></td>
-									<td class="td-style"><h:outputText value="#{org.cui}" /></td>
-									<td class="td-style"><h:commandButton
-											action="#{organizationBean.updateOrganization}"
-											value="Update" class="btn btn-light  btn-sm">
+											value="#{user.username}" /></td>
+									<td class="td-style"><h:outputText
+											value="#{user.firstname}" /></td>
+									<td class="td-style"><h:outputText
+											value="#{user.lastname}" /></td>
+									<td class="td-style"><span> </span> <h:commandButton
+											action="#{identityBean.acceptUserRegistration}"
+											style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+											value="Accept" class="btn btn-light  btn-sm">
 											<f:setPropertyActionListener
-												target="#{organizationBean.selectedOrganization}"
-												value="#{org}" />
+												target="#{identityBean.selectedRQ}" value="#{user}" />
 										</h:commandButton> <span> </span> <h:commandButton
-											action="#{organizationBean.deleteOrganization}"
-											value="Delete" class="btn btn-light  btn-sm">
+											action="#{identityBean.declineUserRegistration}"
+											style="#{loginBean.identityDTO.admin ? 'visibility: visible;':'visibility: hidden;'}"
+											value="Decline" class="btn btn-light  btn-sm">
 											<f:setPropertyActionListener
-												target="#{organizationBean.selectedOrganization}"
-												value="#{org}" />
-										</h:commandButton><span> </span> <h:commandButton
-											action="#{organizationBean.organizationMembers}"
-											value="Members" class="btn btn-light  btn-sm">
-											<f:setPropertyActionListener
-												target="#{organizationBean.selectedOrganization}"
-												value="#{org}" />
+												target="#{identityBean.selectedRQ}" value="#{user}" />
 										</h:commandButton></td>
 								</tr>
 							</ui:repeat>

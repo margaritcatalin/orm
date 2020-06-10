@@ -9,5 +9,6 @@
 		<class>ro.unitbv.model.Right</class>
 		<class>ro.unitbv.model.Role</class>
 		<class>ro.unitbv.model.Identityroleresource</class>
+		<class>ro.unitbv.model.Registrationrequest</class>
 	</persistence-unit>
 </persistence>
